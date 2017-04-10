@@ -5,7 +5,8 @@ const Handler = require("./Handler");
 class PlayerEventHandler extends Handler {
     constructor() {
         super();
-
+        
+        this.types.add("player.login");
         this.types.add("player.join");
         this.types.add("player.kick");
         this.types.add("player.ban");
@@ -15,7 +16,7 @@ class PlayerEventHandler extends Handler {
         this.types.add("player.unmute");
         this.types.add("player.finish");
         this.types.add("player.toptime");
-
+        
         this.ranks = [];
         this.ranks[1] = { suffix: "st", emoji: ":checkered_flag:" };
         this.ranks[2] = { suffix: "nd", emoji: ":checkered_flag:" };
@@ -46,6 +47,9 @@ class PlayerEventHandler extends Handler {
                 bot.sendMessage(`:hammer_pick: ${player} has been banned by ${responsible} (reason: ${reason})`);
             else
                 bot.sendMessage(`:hammer_pick: ${player} has been banned by ${responsible}`);
+        }
+        else if (type == "player.login") {
+            bot.sendMessage(`:ok_hand: ${player} just logged in!`);
         }
         else if (type == "player.quit") {
             if (!payload.type)
